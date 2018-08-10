@@ -4,26 +4,103 @@ using namespace std;
 
 
 struct suspect
-{	
-	int one=1;
-	int two=2;
-	int three=3;
-	int four=4;
-	int five=5;
-	int six=6;
-	int seven=7;
-	int eight=8;
-	int nine=9;
+{
+	int one = 1;
+	int two = 2;
+	int three = 3;
+	int four = 4;
+	int five = 5;
+	int six = 6;
+	int seven = 7;
+	int eight = 8;
+	int nine = 9;
 };
 
 struct kratka
 {
 	int liczba;
 	suspect* podejrzani;
-	int ile_susp=9;
+	int ile_susp = 9;
 };
 
-void refresh(kratka** tab, int &i, int &j)
+void wyswietl(kratka** &tab, int &n)
+{
+	for (int j = 0; j < 3 * n; j++)
+	{
+		for (int i = 0; i < 3 * n; i++)
+		{
+			if (tab)
+			{
+
+
+				if (i%n == 0 && i != 0)
+					cerr << "|";
+
+				else if (j%n == 0 && j != 0)
+				{
+					for (int g = 0; g < 3 * n; g++)
+					{
+						if (g % n == 0)
+							cerr << ".";
+						else
+							cerr << "-";
+					}
+					break;
+				}
+
+				else
+				{
+					int k = i / 3;
+					int l = j / 3;
+
+					if (k * 3 == i && l * 3 == j && tab[k][l].liczba)
+					{
+						if ((i + 1) % 3 == 0 && (j + 1) % 3 == 0)
+							cerr << tab[k][l].liczba;
+						else
+							cerr << " ";
+					}
+					else
+					{
+						if (tab[k][l].ile_susp > 0)
+						{
+							if (tab[k][l].podejrzani->one)
+								cerr << "1";
+							else if (tab[k][l].podejrzani->two)
+								cerr << "2";
+							else if (tab[k][l].podejrzani->three)
+								cerr << "3";
+							else if (tab[k][l].podejrzani->four)
+								cerr << "4";
+							else if (tab[k][l].podejrzani->five)
+								cerr << "5";
+							else if (tab[k][l].podejrzani->six)
+								cerr << "6";
+							else if (tab[k][l].podejrzani->seven)
+								cerr << "7";
+							else if (tab[k][l].podejrzani->eight)
+								cerr << "8";
+							else if (tab[k][l].podejrzani->nine)
+								cerr << "9";
+						}
+						else
+						{
+							cerr << "Blad: ilosc podejrzanych mniejsza od zera";
+						}
+
+					}
+				}
+			}
+			else
+			{
+				cerr << "Nie ma tablicy sudoku\n";
+			}
+		}
+		cerr << "\n";
+	}
+}
+
+void refresh(kratka** &tab, int &i, int &j)
 {
 	if (tab[i][j].ile_susp = 1)
 	{
@@ -51,7 +128,7 @@ void refresh(kratka** tab, int &i, int &j)
 
 }
 
-bool poziom(kratka** tab, int &n, int &i, int &j)
+bool poziom(kratka** &tab, int &n, int &i, int &j)
 {
 	int z = 0;
 	for (int p = 0; p < n; p++)
@@ -118,15 +195,15 @@ bool poziom(kratka** tab, int &n, int &i, int &j)
 				break;
 			}
 		}
-			
+
 	}
-	if (z == n-1)
+	if (z == n - 1)
 		return 0;
 	else
 		return 1;
 }
 
-bool pion(kratka** tab, int &n, int &i, int &j)
+bool pion(kratka** &tab, int &n, int &i, int &j)
 {
 	int z = 0;
 	for (int p = 0; p < n; p++)
@@ -194,18 +271,18 @@ bool pion(kratka** tab, int &n, int &i, int &j)
 			}
 		}
 	}
-	if (z == n-1)
+	if (z == n - 1)
 		return 0;
 	else
 		return 1;
 }
 
-bool kwadrat(kratka** tab, int &n, int &i, int &j)
+bool kwadrat(kratka** &tab, int &n, int &i, int &j)
 {
 	int z = 0;
-	int k = (i / 3)*3;
-	int l = (j / 3)*3;
-	
+	int k = (i / 3) * 3;
+	int l = (j / 3) * 3;
+
 	for (int m = l; m < l + 3; m++)
 	{
 		for (int o = k; o < k + 3; o++)
@@ -289,19 +366,30 @@ int sprawdz(kratka** &tab, int &n)
 		for (int j = 0; j < n; j++)
 		{
 			if (tab[i][j].liczba)
-			{	
-				if(poziom(tab, n, i, j));
-					zmiany++;
-				if(pion(tab, n, i, j));
-					zmiany++;
-				if(kwadrat(tab, n, i, j));
-					zmiany++;
+			{
+				if (poziom(tab, n, i, j));
+				zmiany++;
+				if (pion(tab, n, i, j));
+				zmiany++;
+				if (kwadrat(tab, n, i, j));
+				zmiany++;
 				if (zmiany != 0)
-					refresh(tab,i,j);
+					refresh(tab, i, j);
 			}
 		}
 	}
 	return zmiany;
+}
+
+void CreateSuspect(kratka** &tab, int &n)
+{
+	for (int j = 0; j < n; j++)
+	{
+		for (int i = 0; i < n; i++)
+		{
+			tab[i][j].podejrzani = new suspect;
+		}
+	}
 }
 
 int main()
@@ -312,11 +400,31 @@ int main()
 	for (int i = 0; i<n; i++)
 		tab[i] = new kratka[n];
 
+	CreateSuspect(tab, n);
+
+	//testowe dane
+	tab[6][0].liczba = 4;
+	tab[7][0].liczba = 5;
+	tab[8][0].liczba = 7;
+	tab[1][1].liczba = 3;
+	tab[2][1].liczba = 9;
+	tab[3][1].liczba = 1;
+	tab[0][2].liczba = 6;
+	tab[1][2].liczba = 7;
+	tab[4][2].liczba = 8;
+	tab[5][2].liczba = 5;
+	tab[7][2].liczba = 9;
+	tab[0][3].liczba = 9;
+
+
+
+
 	int zmiany = 0;
-	do
+	//do
 	{
 
-	zmiany = sprawdz(tab,n);
+		//zmiany = sprawdz(tab, n);
+		wyswietl(tab, n);
 
 	} while (zmiany != 0);
 
