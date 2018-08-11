@@ -41,7 +41,7 @@ void wyswietl(kratka** &tab, int &n)
 					for (int g = 0; g < 3 * n; g++)
 					{
 						if (g % n == 0)
-							cerr << ".";
+							cerr << "+";
 						else
 							cerr << "-";
 					}
@@ -64,6 +64,69 @@ void wyswietl(kratka** &tab, int &n)
 					{
 						if (tab[k][l].ile_susp > 0)
 						{
+							switch (k%3 + 1)
+							{
+							case 1:
+
+								switch (l%3 + 1)
+								{
+								case 1:
+
+									cerr << tab[k][l].podejrzani->one;
+									break;
+
+								case 2:
+
+									cerr << tab[k][l].podejrzani->two;
+									break;
+
+								case 3:
+
+									cerr << tab[k][l].podejrzani->three;
+									break;
+								}
+							case 2:
+
+								switch (l%3 + 1)
+								{
+								case 1:
+
+									cerr << tab[k][l].podejrzani->four;
+									break;
+
+								case 2:
+
+									cerr << tab[k][l].podejrzani->five;
+									break;
+
+								case 3:
+
+									cerr << tab[k][l].podejrzani->six;
+									break;
+								}
+
+							case 3:
+
+								switch (l%3 + 1)
+								{
+								case 1:
+
+									cerr << tab[k][l].podejrzani->seven;
+									break;
+
+								case 2:
+
+									cerr << tab[k][l].podejrzani->eight;
+									break;
+
+								case 3:
+
+									cerr << tab[k][l].podejrzani->nine;
+									break;
+								}
+							}
+
+
 							if (tab[k][l].podejrzani->one)
 								cerr << "1";
 							else if (tab[k][l].podejrzani->two)
@@ -403,7 +466,7 @@ int main()
 	CreateSuspect(tab, n);
 
 	//testowe dane
-	tab[6][0].liczba = 4;
+	/*tab[6][0].liczba = 4;
 	tab[7][0].liczba = 5;
 	tab[8][0].liczba = 7;
 	tab[1][1].liczba = 3;
@@ -414,16 +477,31 @@ int main()
 	tab[4][2].liczba = 8;
 	tab[5][2].liczba = 5;
 	tab[7][2].liczba = 9;
-	tab[0][3].liczba = 9;
+	tab[0][3].liczba = 9;*/
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			int x = i + 1;
+			if (x > n)
+				x = 1;
+			else
+			{
+				tab[i][j].liczba = x;
+				x++;
+			}
+		}
+	}
 
 
 
 
 	int zmiany = 0;
-	//do
+	do
 	{
 
-		//zmiany = sprawdz(tab, n);
+		zmiany = sprawdz(tab, n);
 		wyswietl(tab, n);
 
 	} while (zmiany != 0);
