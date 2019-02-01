@@ -1,0 +1,11 @@
+﻿  main.cpp
+c:\users\majkel\source\repos\sudokuv2\sudokuv2\main.cpp(10): error C2039: 'length': is not a member of 'std::vector<int,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=int
+          ]
+  c:\users\majkel\source\repos\sudokuv2\sudokuv2\main.cpp(8): note: see declaration of 'std::vector<int,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=int
+          ]
