@@ -119,7 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LineSuspect.h" />
-    <ClInclude Include="Plansza.h" />
+    <ClInclude Include="Board.h" />
     <ClInclude Include="Subsquare.h" />
     <ClInclude Include="Suspect.h" />
   </ItemGroup>

@@ -23,13 +23,13 @@
     <ClInclude Include="Suspect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Plansza.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Subsquare.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LineSuspect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Board.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
