@@ -27,6 +27,35 @@ public:
 					it.line[i].second = false; 
 		}
 	}
+	void subsquareRefresh()
+	{
+		for (int s = 0; s < n; ++s)
+		{
+			for (int pod = 0; pod < n; ++pod)
+			{
+				if (board[s].square[pod].value != -1)
+				{
+					int tmp = board[s].square[pod].value;
+					for (auto& it : board[s].square)
+					{
+						if (tmp < 3 && tmp>=0)
+						{
+							*it.susp[tmp].line[x].second;		//<--- taka skladnia bedzie
+						}
+						else if (tmp < 6 && tmp >= 3)
+						{
+
+						}
+						else if (tmp < 9 && tmp >= 6)
+						{
+
+						}
+					}
+				}
+			}
+		}
+	}
+
 	void Show()
 	{
 		for (int w = 0; w < n / 3; ++w)
