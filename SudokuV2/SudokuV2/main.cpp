@@ -43,9 +43,20 @@ int main()
 	game.setData(8, 6, 8);
 	game.setData(8, 8, 6);
 
-	//game.subsquareRefresh();
-	game.verticalRefresh();
+	game.Show();
 
+	bool changes = true;
+	while (changes)
+	{
+		changes = false;
+		
+		changes |= game.subsquareRefresh();
+		changes |= game.horizontalRefresh();
+		changes |= game.verticalRefresh();
+		changes |= game.setValues();
+	}
+	
+	std::cout << "\n\n";
 	game.Show();
 
 

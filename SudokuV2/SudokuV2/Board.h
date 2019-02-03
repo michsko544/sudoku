@@ -27,8 +27,9 @@ public:
 					it.line[i].second = false; 
 		}
 	}
-	void subsquareRefresh()
+	bool subsquareRefresh()
 	{
+		bool changes=false;
 		for (int s = 0; s < n; ++s)
 		{
 			for (int pod = 0; pod < n; ++pod)
@@ -40,79 +41,100 @@ public:
 					{
 						if (tmp != board[s].square[i].value)
 						{
-							if (tmp-1< 3 && tmp-1 >= 0)
-							{
-								board[s].square[i].susp[0].line[(tmp-1) % (n / 3)].second = false;
-							}
-							else if (tmp-1 < 6 && tmp-1 >= 3)
-							{
-								board[s].square[i].susp[1].line[(tmp-1) % (n / 3)].second = false;
-							}
-							else if (tmp-1 < 9 && tmp-1 >= 6)
-							{
-								board[s].square[i].susp[2].line[(tmp-1) % (n / 3)].second = false;
-							}
+							const bool checkchange = board[s].square[i].susp[(tmp - 1) / (n / 3)].line[(tmp - 1) % (n / 3)].second;
+							board[s].square[i].susp[(tmp-1)/(n/3)].line[(tmp-1) % (n / 3)].second = false;
+							if (checkchange == true)
+								changes |= true;
 						}
 					}
 				}
 			}
 		}
+		return changes;
 	}
 
-
-	void verticalRefresh() 
+	bool horizontalRefresh()
 	{
+		bool changes = false;
 		for (int y = 0; y < n; ++y)
 		{
 			for (int x = 0; x < n; ++x)
 			{
-				if (y >= 0 && y < 3)
+				if (board[(y / (n / 3))*n / 3 + x / (n / 3)].square[(y % (n / 3))*(n / 3) + x % (n / 3)].value != -1)
 				{
-					if (x >= 0 && x < 3)
+					int tmp = board[(y / (n / 3))*n / 3 + x / (n / 3)].square[(y%(n/3))*(n/3)+x % (n / 3)].value;
+					for (int elem = 0; elem < n; ++elem)
 					{
-						board[0].square[x % (n / 3)].susp[].line[] = false;
-					}
-					else if (x >= 3 && x < 6)
-					{
-
-					}
-					else if (x >= 6 && x < 9)
-					{
-
-					}
-				}
-				else if (x >= 3 && x < 6)
-				{
-					if (x >= 0 && x < 3)
-					{
-
-					}
-					else if (x >= 3 && x < 6)
-					{
-
-					}
-					else if (x >= 6 && x < 9)
-					{
-
-					}
-				}
-				else if (x >= 6 && x < 9)
-				{
-					if (x >= 0 && x < 3)
-					{
-
-					}
-					else if (x >= 3 && x < 6)
-					{
-
-					}
-					else if (x >= 6 && x < 9)
-					{
-
+						if (tmp != board[(y / (n / 3))*n / 3 + elem / (n / 3)].square[(y % (n / 3))*(n / 3) + elem % (n / 3)].value)
+						{
+							const bool checkchange = board[(y / (n / 3))*(n / 3) + elem / (n / 3)].square[(y % (n / 3))*(n / 3) + elem % (n / 3)].susp[(tmp - 1) / (n / 3)].line[(tmp - 1) % (n / 3)].second;
+							board[(y / (n / 3))*(n / 3) + elem / (n / 3)].square[(y % (n / 3))*(n / 3) + elem % (n / 3)].susp[(tmp - 1) / (n / 3)].line[(tmp - 1) % (n / 3)].second = false;
+							if(checkchange==true)
+								changes |= true;
+						}
 					}
 				}
 			}
 		}
+		return changes;
+	}
+
+	bool verticalRefresh()
+	{
+		bool changes = false;
+		for (int x = 0; x < n; ++x)
+		{
+			for (int y = 0; y < n; ++y)
+			{
+				if (board[(y / (n / 3))*n / 3 + x / (n / 3)].square[(y % (n / 3))*(n / 3) + x % (n / 3)].value != -1)
+				{
+					int tmp = board[(y / (n / 3))*n / 3 + x / (n / 3)].square[(y % (n / 3))*(n / 3) + x % (n / 3)].value;
+					for (int elem = 0; elem < n; ++elem)
+					{
+						if (tmp != board[(elem / (n / 3))*n / 3 + x / (n / 3)].square[(elem % (n / 3))*(n / 3) + x % (n / 3)].value)
+						{
+							const bool checkchange = board[(elem / (n / 3))*(n / 3) + x / (n / 3)].square[(elem % (n / 3))*(n / 3) + x % (n / 3)].susp[(tmp - 1) / (n / 3)].line[(tmp - 1) % (n / 3)].second;
+							board[(elem / (n / 3))*(n / 3) + x / (n / 3)].square[(elem % (n / 3))*(n / 3) + x % (n / 3)].susp[(tmp - 1) / (n / 3)].line[(tmp - 1) % (n / 3)].second = false;
+							if (checkchange == true)
+								changes |= true;
+						}
+					}
+				}
+			}
+		}
+		return changes;
+	}
+
+	bool setValues()
+	{
+		bool changes = false;
+		for (int s = 0; s < n; ++s)
+		{
+			for(int i=0;i<n;++i)
+			{
+				if (board[s].square[i].value == -1)
+				{
+					int counter = 0;
+					int whatSet = -1;
+					for (int j = 0; j < n; ++j)
+					{
+						bool tmp=board[s].square[i].susp[j / (n / 3)].line[j % (n / 3)].second;
+						if (tmp == true)
+						{
+							whatSet = board[s].square[i].susp[j / (n / 3)].line[j % (n / 3)].first;
+							++counter;
+						}
+
+					}
+					if (counter == 1)
+					{
+						board[s].square[i].setValue(whatSet);
+						changes |= true;
+					}
+				}
+			}
+		}
+		return changes;
 	}
 
 	void Show()
