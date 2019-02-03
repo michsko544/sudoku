@@ -1,7 +1,7 @@
 #pragma once
 #include "Suspect.h"
 
-class Subsquare : public Suspect
+class Subsquare
 {
 protected:
 	std::vector<Suspect> square;

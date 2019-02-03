@@ -3,7 +3,7 @@
 #include <utility>
 #include "LineSuspect.h"
 
-class Suspect : public LineSuspect
+class Suspect
 {
 protected:
 	int value{ -1 };

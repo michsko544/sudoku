@@ -43,6 +43,8 @@ int main()
 	game.setData(8, 6, 8);
 	game.setData(8, 8, 6);
 
+	//game.subsquareRefresh();
+	game.verticalRefresh();
 
 	game.Show();
 

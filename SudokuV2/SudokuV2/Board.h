@@ -36,20 +36,79 @@ public:
 				if (board[s].square[pod].value != -1)
 				{
 					int tmp = board[s].square[pod].value;
-					for (auto& it : board[s].square)
+					for (int i=0;i<n;++i)
 					{
-						if (tmp < 3 && tmp>=0)
+						if (tmp != board[s].square[i].value)
 						{
-							*it.susp[tmp].line[x].second;		//<--- taka skladnia bedzie
+							if (tmp-1< 3 && tmp-1 >= 0)
+							{
+								board[s].square[i].susp[0].line[(tmp-1) % (n / 3)].second = false;
+							}
+							else if (tmp-1 < 6 && tmp-1 >= 3)
+							{
+								board[s].square[i].susp[1].line[(tmp-1) % (n / 3)].second = false;
+							}
+							else if (tmp-1 < 9 && tmp-1 >= 6)
+							{
+								board[s].square[i].susp[2].line[(tmp-1) % (n / 3)].second = false;
+							}
 						}
-						else if (tmp < 6 && tmp >= 3)
-						{
+					}
+				}
+			}
+		}
+	}
 
-						}
-						else if (tmp < 9 && tmp >= 6)
-						{
 
-						}
+	void verticalRefresh() 
+	{
+		for (int y = 0; y < n; ++y)
+		{
+			for (int x = 0; x < n; ++x)
+			{
+				if (y >= 0 && y < 3)
+				{
+					if (x >= 0 && x < 3)
+					{
+						board[0].square[x % (n / 3)].susp[].line[] = false;
+					}
+					else if (x >= 3 && x < 6)
+					{
+
+					}
+					else if (x >= 6 && x < 9)
+					{
+
+					}
+				}
+				else if (x >= 3 && x < 6)
+				{
+					if (x >= 0 && x < 3)
+					{
+
+					}
+					else if (x >= 3 && x < 6)
+					{
+
+					}
+					else if (x >= 6 && x < 9)
+					{
+
+					}
+				}
+				else if (x >= 6 && x < 9)
+				{
+					if (x >= 0 && x < 3)
+					{
+
+					}
+					else if (x >= 3 && x < 6)
+					{
+
+					}
+					else if (x >= 6 && x < 9)
+					{
+
 					}
 				}
 			}
@@ -70,14 +129,18 @@ public:
 						{
 							board[w*n / 3 + k].square[p*n / 3 + c].ShowLine(l);
 						}
-						std::cout << "|";
+						if(k!=(n/3)-1)
+							std::cout << "|";
 					}
 					std::cout << "\n";
 				}
 			}
-			for (int i = 0; i < n*n / 3 * 2 + n / 3 - 1; ++i)
-				std::cout << "-";
-			std::cout << "\n";
+			if (w != (n / 3)-1)
+			{
+				for (int i = 0; i < n*n / 3 * 2 + n / 3 - 1; ++i)
+					std::cout << "-";
+				std::cout << "\n";
+			}
 		}
 	}
 };
