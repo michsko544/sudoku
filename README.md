@@ -1,2 +1,2 @@
 # sudoku
-Hobbistyczny projekt programu rozwiązującego sudoku
+Hobbistyczny projekt programu samodzielnie rozwiązującego sudoku
